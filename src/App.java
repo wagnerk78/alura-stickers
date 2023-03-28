@@ -1,4 +1,6 @@
+import java.io.InputStream;
 import java.net.URI;
+import java.net.URL;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
@@ -21,13 +23,19 @@ public class App {
     
     // Exibir e manipular os dados
     for (Map<String, String> filme: listaDeFilmes) {
-        String title = "\u001b[31m \u001b[1mNome do filme: \u001b[m";
-        String image = "\u001b[33m \u001b[1mImagem: \u001b[m";
-        String rating = "\u001b[32m \u001b[1mAvaliação: \u001b[m";
-        System.out.println(title + filme.get("title"));
-        System.out.println(image + filme.get("image"));
-        System.out.println(rating + filme.get("imDbRating"));
-        System.out.println("\n");
+
+        String urlImage = filme.get("image");
+        String titulo = filme.get("title");
+      
+
+        InputStream inputStream = new URL(urlImage).openStream();
+        String nomeArquivo = "saida/" + titulo + ".png";
+        
+        var geradora = new GeneratorX();
+        geradora.criar(inputStream, nomeArquivo);
+
+        System.out.println(filme.get("title"));
+        System.out.println();
         
         
        
