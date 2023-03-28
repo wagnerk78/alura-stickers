@@ -21,12 +21,14 @@ public class App {
     
     // Exibir e manipular os dados
     for (Map<String, String> filme: listaDeFilmes) {
-        String title = "Título: ";
-        String image = "Imagem: ";
-        String rating = "Avaliação: ";
+        String title = "\u001b[31m \u001b[1mNome do filme: \u001b[m";
+        String image = "\u001b[33m \u001b[1mImagem: \u001b[m";
+        String rating = "\u001b[32m \u001b[1mAvaliação: \u001b[m";
         System.out.println(title + filme.get("title"));
         System.out.println(image + filme.get("image"));
         System.out.println(rating + filme.get("imDbRating"));
+        System.out.println("\n");
+        
         
        
 
