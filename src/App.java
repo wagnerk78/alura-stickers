@@ -1,40 +1,40 @@
 import java.io.InputStream;
-import java.net.URI;
 import java.net.URL;
-import java.net.http.HttpClient;
-import java.net.http.HttpRequest;
-import java.net.http.HttpResponse;
-import java.net.http.HttpResponse.BodyHandlers;
 import java.util.List;
-import java.util.Map;
 
 public class App {
     public static void main(String[] args) throws Exception {
-    String url = "https://raw.githubusercontent.com/alura-cursos/imersao-java-2-api/main/TopMovies.json";
-    URI endereco = URI.create(url);
-    var client = HttpClient.newHttpClient();
-    var request = HttpRequest.newBuilder(endereco).GET().build();
-    HttpResponse<String> response = client.send(request, BodyHandlers.ofString());
-    String body = response.body();
+    
+    String url = "https://api.nasa.gov/planetary/apod?api_key=DEMO_KEY&start_date=2023-03-27&end_date=2023-03-28";
+    ExtratorDeConteudos extrator = new ExtratorDeConteudoDaNasa();
+
+    //String url = "https://mocki.io/v1/dd0a4781-599c-442b-a356-98d4a1d0e42c";
+    //ExtratorDeConteudos extrator = new ExtratorDeConteudodoIMDB();
+
+
+    var http = new ClienteHttp();
+    String json = http.buscaDados(url);
     
     // Extração de dados
-    var parser = new JsonParser();
-    List<Map<String, String>> listaDeFilmes = parser.parse(body);
+    
     
     // Exibir e manipular os dados
-    for (Map<String, String> filme: listaDeFilmes) {
+    
+    List<Conteudo> conteudos = extrator.extraiConteudos(json);
 
-        String urlImage = filme.get("image");
-        String titulo = filme.get("title");
-      
+    var geradora = new GeneratorX();
 
-        InputStream inputStream = new URL(urlImage).openStream();
-        String nomeArquivo = "saida/" + titulo + ".png";
+    for (int i=0; i< 2; i++) {
+
+        Conteudo conteudo = conteudos.get(i);
         
-        var geradora = new GeneratorX();
+        InputStream inputStream = new URL(conteudo.getUrlImage()).openStream();
+        String nomeArquivo = "saida/" + conteudo.getTitulo() + ".png";
+        
+        
         geradora.criar(inputStream, nomeArquivo);
 
-        System.out.println(filme.get("title"));
+        System.out.println(conteudo.getTitulo());
         System.out.println();
         
         
@@ -42,10 +42,10 @@ public class App {
 
     }
         
-    }
+    
   
 
 
-
     }
+}
 
