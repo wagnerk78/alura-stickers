@@ -28,14 +28,14 @@ graphics.drawImage(imageOriginal, 0, 0, null);
 
 
 // CONFIGURAR A FONTE
-var fonte = new Font(Font.SANS_SERIF, Font.BOLD, 96);
+var fonte = new Font(Font.SANS_SERIF, Font.BOLD, 28);
 graphics.setColor(Color.YELLOW);
 graphics.setFont(fonte);
 
 
 
 // escrever uma frase em uma nova imagem
-graphics.drawString("TOPZEIRA", 100, novaAltura - 60);
+graphics.drawString("USE E ABUSE", 30, novaAltura - 60);
 
 
 // escrever a nova imagem em um arquivo
